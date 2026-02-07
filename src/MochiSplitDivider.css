@@ -1,0 +1,33 @@
+/* Generic: pane split divider line (reused across screens) */
+
+.mochi-pane--splitDivider {
+  --mochi-split-divider-x: 50%;
+}
+.mochi-pane--splitDivider::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--mochi-split-divider-x);
+  width: 1px;
+  background: rgba(0, 0, 0, 0.12);
+  box-shadow:
+    -1px 0 0 rgba(255, 255, 255, 0.55),
+    1px 0 0 rgba(0, 0, 0, 0.06),
+    0 0 10px rgba(0, 0, 0, 0.08);
+  opacity: 0.65;
+  pointer-events: none;
+  z-index: 0;
+}
+.mochi-pane--splitDivider > .mochi-pane-header,
+.mochi-pane--splitDivider > .mochi-pane-body {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 1024px) {
+  .mochi-pane--splitDivider::after {
+    display: none;
+  }
+}
+

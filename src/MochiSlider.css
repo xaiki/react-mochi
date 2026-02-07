@@ -1,0 +1,214 @@
+/* Mochi Slider — matches enyojs/mochi Slider.less + ProgressBar.less exactly */
+
+/* Root: Slider.less — also acts as ProgressBar container */
+.mochi-slider {
+  position: relative;
+  margin: 10px 20px;
+  min-height: 1px;
+  overflow: visible;
+}
+
+/* Wrapper for track + optional tick labels */
+.mochi-slider-track-wrap {
+  position: relative;
+}
+
+.mochi-slider.mochi-slider--with-ticks .mochi-slider-track-wrap {
+  margin-bottom: 1.25rem;
+}
+
+/* ProgressBar.less — track (1px bar); no min-width so bar matches knob/ticks width exactly */
+.mochi-slider .mochi-progress-bar {
+  height: 1px;
+  width: 100%;
+  min-width: 0;
+  background-color: #a2a2a2;
+  position: relative;
+}
+
+.mochi-slider .mochi-progress-bar-bar {
+  height: 100%;
+  background-color: #69cdff;
+  transition: width 0.1s ease;
+}
+
+/* Ticks at data points */
+.mochi-slider-tick {
+  position: absolute;
+  top: -4px;
+  width: 1px;
+  height: 9px;
+  background-color: #a2a2a2;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+/* Labels below the track */
+.mochi-slider-tick-labels {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  margin-top: 4px;
+  height: 1.25rem;
+  pointer-events: none;
+}
+
+.mochi-slider-tick-label {
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 10px;
+  line-height: 1.25rem;
+  color: var(--muted-foreground, #71717a);
+  white-space: nowrap;
+  max-width: 4em;
+  overflow: hidden;
+  text-overflow: clip;
+  text-align: center;
+}
+
+.mochi-slider-tick-label--empty {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Slider.less — tap area */
+.mochi-slider-taparea {
+  position: absolute;
+  top: -16px;
+  height: 32px;
+  width: 100%;
+  left: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.mochi-slider.mochi-slider--disabled .mochi-slider-taparea {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.mochi-slider-taparea input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: inherit;
+}
+
+.mochi-slider-taparea input::-webkit-slider-runnable-track,
+.mochi-slider-taparea input::-webkit-slider-thumb,
+.mochi-slider-taparea input::-moz-range-track,
+.mochi-slider-taparea input::-moz-range-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  border: none;
+}
+
+.mochi-slider-taparea input:focus {
+  outline: none;
+}
+
+/* Slider.less — knob: position relative + margin -8px -9px (left edge at left%, then pull 9px left) */
+.mochi-slider-knob {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 16px;
+  width: 16px;
+  border-radius: 8px;
+  margin: -8px 0 0 -9px;
+  background-color: #69cdff;
+  pointer-events: none;
+  z-index: 1;
+  transition: width 0.12s ease, height 0.12s ease, margin 0.12s ease, border-radius 0.12s ease;
+}
+
+.mochi-slider-knob.active,
+.mochi-slider-knob:active:hover {
+  height: 36px;
+  width: 36px;
+  border-radius: 18px;
+  margin: -18px 0 0 -20px;
+}
+
+/* Gota: only on handler click, to the right of knob, colored, elegant bubble */
+.mochi-slider-popup {
+  position: absolute;
+  display: block;
+  z-index: 20;
+  left: 0;
+  top: 0;
+  width: 62px;
+  height: 37px;
+  padding-left: 4px;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.12s ease, visibility 0.12s ease;
+}
+
+.mochi-slider.mochi-slider--show-popup .mochi-slider-popup {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mochi-slider.mochi-slider--disabled .mochi-slider-popup {
+  display: none;
+}
+
+/* Elegant bubble: bottom corners square at ends so they meet the nub cleanly */
+.mochi-slider-popup::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 62px;
+  height: 37px;
+  background: linear-gradient(145deg, #5eb8f0 0%, #3a9ed9 100%);
+  border-radius: 10px 10px var(--gota-radius-br, 10px) var(--gota-radius-bl, 10px);
+  box-shadow: 0 2px 8px rgba(57, 158, 217, 0.35);
+  z-index: 0;
+  transition: border-radius 0.08s ease;
+}
+
+/* Triangle pointing down toward the handler; tip position follows handler (left=left, right=right) */
+.mochi-slider-popup::after {
+  content: '';
+  position: absolute;
+  left: var(--gota-tip-left, 6px);
+  bottom: -8px;
+  border: 8px solid transparent;
+  border-top: 8px solid #3a9ed9;
+  border-bottom: none;
+  width: 0;
+  height: 0;
+  z-index: 0;
+  transition: left 0.08s ease;
+}
+
+.mochi-slider-popup-label {
+  position: absolute;
+  top: 0;
+  left: 4px;
+  width: 54px;
+  height: 37px;
+  white-space: nowrap;
+  font-family: var(--mochi-font-medium, "Mochi Medium"), system-ui, sans-serif;
+  color: #fff;
+  text-align: center;
+  line-height: 37px;
+  vertical-align: middle;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  z-index: 1;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+}

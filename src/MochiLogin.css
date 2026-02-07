@@ -1,0 +1,44 @@
+/* Login-specific helpers (extracted from old mochi.css) */
+
+.mochi-login-box {
+  width: min(980px, calc(100vw - 64px));
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mochi-login-card .mochi-groupbox-body {
+  padding: 18px 26px 22px;
+}
+.mochi-login-app-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: baseline;
+  min-height: 22px;
+}
+.mochi-login-app-name {
+  font-family: "Mochi Light";
+  font-size: 18px;
+  color: #7d7d7d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.mochi-login-title {
+  margin-top: 10px;
+  font-family: "Mochi Light";
+  font-size: 36px;
+  line-height: 32px;
+  color: #4b4b4b;
+  text-transform: uppercase;
+}
+.mochi-login-subtitle {
+  margin-top: 10px;
+  font-family: "Mochi Medium";
+  font-size: 18px;
+  font-style: italic;
+  color: #323232;
+  line-height: 26px;
+}
+.mochi-login-card .mochi-actions {
+  margin-top: 18px;
+}
+

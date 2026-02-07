@@ -1,0 +1,74 @@
+/* Generic: Mochi-styled form sections + rows (reused across screens) */
+
+.mochi-form-col {
+  min-width: 0;
+  min-height: 0;
+  overflow: visible;
+}
+
+.mochi-form-section {
+  padding: 6px 6px 2px;
+}
+.mochi-form-sectionTitle {
+  padding: 10px 10px 14px;
+  font-family: "Mochi Medium";
+  font-size: 18px;
+  font-style: italic;
+  color: #323232;
+}
+
+.mochi-form-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 10px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+.mochi-form-row:first-of-type {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.mochi-form-rowLabel {
+  min-width: 0;
+}
+.mochi-form-rowLabelMain {
+  font-family: "Mochi Medium";
+  font-size: 14px;
+  font-style: italic;
+  font-weight: bold;
+  color: #4b4b4b;
+  line-height: 18px;
+}
+.mochi-form-rowLabelSub {
+  margin-top: 3px;
+  font-family: "Mochi Medium";
+  font-size: 12px;
+  font-style: italic;
+  color: #7d7d7d;
+  line-height: 14px;
+}
+.mochi-form-rowLink {
+  margin-top: 4px;
+  font-family: "Mochi Medium";
+  font-size: 12px;
+  font-style: italic;
+  color: #7d7d7d;
+  text-decoration: underline;
+}
+
+.mochi-form-rowControl {
+  width: min(260px, 52vw);
+  min-width: 180px;
+}
+@media (max-width: 1024px) {
+  .mochi-form-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .mochi-form-rowControl {
+    width: 100%;
+    min-width: 0;
+  }
+}
+

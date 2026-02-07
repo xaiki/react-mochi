@@ -1,0 +1,83 @@
+/* Mochi-style radio/selection control (checked + unchecked + mixed) */
+
+.mochi-radio {
+  --mochi-radio-size: 30px;
+  --mochi-radio-border: rgba(0, 0, 0, 0.55);
+  --mochi-radio-bg-checked: #f7b500; /* warm mochi yellow */
+  --mochi-radio-shadow: 0 8px 18px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+
+  width: var(--mochi-radio-size);
+  height: var(--mochi-radio-size);
+  border-radius: 999px;
+  border: 2px solid var(--mochi-radio-border);
+  background: transparent;
+  box-shadow: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mochi-radio[data-state="checked"],
+.mochi-radio[data-state="mixed"] {
+  border-color: rgba(247, 181, 0, 0.95);
+  background: var(--mochi-radio-bg-checked);
+  box-shadow: var(--mochi-radio-shadow);
+}
+
+.mochi-radioIcon {
+  width: calc(var(--mochi-radio-size) * 0.5);
+  height: calc(var(--mochi-radio-size) * 0.5);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Check mark */
+.mochi-radio[data-state="checked"] .mochi-radioIcon::before {
+  content: "";
+  width: 10px;
+  height: 6px;
+  border-left: 3px solid rgba(255, 255, 255, 0.96);
+  border-bottom: 3px solid rgba(255, 255, 255, 0.96);
+  transform: rotate(-45deg) translateY(-1px);
+  border-radius: 1px;
+}
+
+/* Mixed (indeterminate) mark */
+.mochi-radio[data-state="mixed"] .mochi-radioIcon::before {
+  content: "";
+  width: 14px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 999px;
+}
+
+/* Group variant (ALL / metaevents): stacked lines icon when checked */
+.mochi-radio[data-variant="group"][data-state="checked"] .mochi-radioIcon::before,
+.mochi-radio[data-variant="group"][data-state="mixed"] .mochi-radioIcon::before {
+  content: "";
+  width: 14px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.96);
+  border: none;
+  border-radius: 1px;
+  box-shadow:
+    0 -4px 0 0 rgba(255, 255, 255, 0.96),
+    0 4px 0 0 rgba(255, 255, 255, 0.96);
+}
+
+.mochi-radio:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 3px rgba(105, 205, 255, 0.35),
+    var(--mochi-radio-shadow);
+}
+
+.mochi-radio[aria-disabled="true"] {
+  opacity: 0.55;
+  pointer-events: none;
+}
+

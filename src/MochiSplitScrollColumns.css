@@ -1,0 +1,92 @@
+/* Generic: two columns that scroll independently (reused across screens) */
+
+.mochi-splitScroll-wrap {
+  height: 100%;
+  min-height: 0;
+  box-sizing: border-box;
+  padding: 16px 24px 16px;
+  /* Use container queries so the split responds to pane width, not viewport width */
+  container-type: inline-size;
+}
+
+.mochi-splitScroll {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--mochi-split-left, minmax(320px, 420px)) minmax(0, 1fr);
+  gap: var(--mochi-split-gap, 28px);
+  align-items: stretch;
+  height: 100%;
+  min-height: 0;
+}
+
+.mochi-splitScroll-col {
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Left column: flex so list pane can pin footer at bottom; only the list part scrolls */
+.mochi-splitScroll-col--left {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+/* First block (e.g. signers) keeps its height; TOC takes the rest and scrolls. When TOC is the only child, it scrolls. */
+.mochi-splitScroll-col--left > *:first-child:not(.mochi-splitScroll-toc) {
+  flex-shrink: 0;
+}
+.mochi-splitScroll-col--left .mochi-pane-splitSearch {
+  flex-shrink: 0;
+}
+.mochi-splitScroll-col--left .mochi-listPane {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+.mochi-splitScroll-col--left .mochi-listPane .mochi-listPane-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* TOC block in left column: takes remaining height and scrolls */
+.mochi-splitScroll-col--left .mochi-splitScroll-toc {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@container (max-width: 820px) {
+  /* Phone: stack vertically and let ONLY the outer pane scroll.
+     No independent column scrolling in this mode. */
+  .mochi-splitScroll-wrap {
+    height: auto;
+    padding: 10px 12px 12px;
+  }
+
+  .mochi-splitScroll {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    height: auto;
+  }
+
+  .mochi-splitScroll-col {
+    overflow: visible;
+  }
+
+  /* TOC: collapsed by default; nav visible only when open (click "Contenido") */
+  .mochi-splitScroll-toc .agreement-toc .agreement-toc-nav {
+    display: none;
+  }
+  .mochi-splitScroll-toc .agreement-toc[data-open="true"] .agreement-toc-nav {
+    display: flex;
+  }
+  .mochi-splitScroll-toc .agreement-toc .agreement-toc-chevron {
+    display: inline;
+  }
+}

@@ -1,0 +1,160 @@
+/* Checkbox / Radio / Toggle / Spinner (extracted from old mochi.css) */
+
+.mochi-radio,
+.mochi-checkbox {
+  cursor: pointer;
+  height: 22px;
+  width: 22px;
+  margin: 0px;
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 13px;
+  border: 2px solid #646464;
+}
+.mochi-checkbox[aria-checked="true"] {
+  background: url("/mochi/images/checkbox.png") no-repeat;
+  padding: 2px;
+  border-width: 0px;
+}
+.mochi-radio.disabled,
+.mochi-checkbox.disabled {
+  opacity: 0.4;
+}
+
+.mochi-toggle {
+  display: inline-block;
+  height: 24px;
+  line-height: 24px;
+  min-width: 48px;
+  vertical-align: middle;
+  border-radius: 12px;
+  background-size: auto 100%;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  background-color: #a2a2a2;
+  transition: background-color 0.1s linear;
+}
+.mochi-toggle[data-state="on"] {
+  background-color: #69cdff;
+}
+.mochi-toggle-knob {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  margin: 2px;
+  border-radius: 10px;
+  background-color: white;
+  left: 0px;
+  overflow: hidden;
+  transition: transform 0.12s ease;
+}
+.mochi-toggle[data-state="on"] .mochi-toggle-knob {
+  transform: translateX(24px);
+}
+.mochi-toggle.disabled {
+  opacity: 0.4;
+}
+
+/* Spinner: 64-point morph (circle → triangle → square → circle), smooth color, multidirectional squash/stretch */
+@property --mochi-spinner-fill {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #69cdff;
+}
+/* Chaotic squash and stretch: irregular timing, varying intensity, skew so direction isn’t axis-aligned */
+@keyframes mochi-spinner-squash {
+  0%, 100% { transform: scale(1.22, 0.78) skewX(0deg) skewY(0deg); }
+  11%      { transform: scale(0.82, 1.18) skewX(5deg) skewY(-2deg); }
+  23%      { transform: scale(1.15, 0.88) skewX(-4deg) skewY(3deg); }
+  37%      { transform: scale(0.78, 1.22) skewX(2deg) skewY(6deg); }
+  48%      { transform: scale(1.2, 0.82) skewX(-6deg) skewY(-3deg); }
+  61%      { transform: scale(0.88, 1.14) skewX(4deg) skewY(-5deg); }
+  74%      { transform: scale(1.18, 0.8) skewX(-3deg) skewY(4deg); }
+  86%      { transform: scale(0.85, 1.2) skewX(6deg) skewY(2deg); }
+}
+/* 4 colours, smooth interpolation via @property */
+@keyframes mochi-spinner-fill {
+  0%, 100% { --mochi-spinner-fill: #69cdff; }
+  25%      { --mochi-spinner-fill: #5bd06a; }
+  50%      { --mochi-spinner-fill: #f2994a; }
+  75%      { --mochi-spinner-fill: #f2c94c; }
+}
+/* 64-point polygons for smooth form morph */
+@keyframes mochi-spinner-morph {
+  0%, 100% {
+    clip-path: polygon(
+      73.00% 50.00%, 72.89% 47.75%, 72.56% 45.51%, 72.01% 43.32%, 71.25% 41.20%, 70.28% 39.16%, 69.12% 37.22%, 67.78% 35.41%, 66.26% 33.74%, 64.59% 32.22%, 62.78% 30.88%, 60.84% 29.72%, 58.80% 28.75%, 56.68% 27.99%, 54.49% 27.44%, 52.25% 27.11%, 50.00% 27.00%, 47.75% 27.11%, 45.51% 27.44%, 43.32% 27.99%, 41.20% 28.75%, 39.16% 29.72%, 37.22% 30.88%, 35.41% 32.22%, 33.74% 33.74%, 32.22% 35.41%, 30.88% 37.22%, 29.72% 39.16%, 28.75% 41.20%, 27.99% 43.32%, 27.44% 45.51%, 27.11% 47.75%, 27.00% 50.00%, 27.11% 52.25%, 27.44% 54.49%, 27.99% 56.68%, 28.75% 58.80%, 29.72% 60.84%, 30.88% 62.78%, 32.22% 64.59%, 33.74% 66.26%, 35.41% 67.78%, 37.22% 69.12%, 39.16% 70.28%, 41.20% 71.25%, 43.32% 72.01%, 45.51% 72.56%, 47.75% 72.89%, 50.00% 73.00%, 52.25% 72.89%, 54.49% 72.56%, 56.68% 72.01%, 58.80% 71.25%, 60.84% 70.28%, 62.78% 69.12%, 64.59% 67.78%, 66.26% 66.26%, 67.78% 64.59%, 69.12% 62.78%, 70.28% 60.84%, 71.25% 58.80%, 72.01% 56.68%, 72.56% 54.49%, 72.89% 52.25%
+    );
+  }
+  25% {
+    clip-path: polygon(
+      50.00% 22.00%, 51.45% 24.73%, 52.91% 27.45%, 54.36% 30.18%, 55.82% 32.91%, 57.27% 35.64%, 58.73% 38.36%, 60.18% 41.09%, 61.64% 43.82%, 63.09% 46.55%, 64.55% 49.27%, 66.00% 52.00%, 67.45% 54.73%, 68.91% 57.45%, 70.36% 60.18%, 71.82% 62.91%, 73.27% 65.64%, 74.73% 68.36%, 76.18% 71.09%, 77.64% 73.82%, 79.09% 76.55%, 80.55% 79.27%, 82.00% 82.00%, 78.95% 82.00%, 75.90% 82.00%, 72.86% 82.00%, 69.81% 82.00%, 66.76% 82.00%, 63.71% 82.00%, 60.67% 82.00%, 57.62% 82.00%, 54.57% 82.00%, 51.52% 82.00%, 48.48% 82.00%, 45.43% 82.00%, 42.38% 82.00%, 39.33% 82.00%, 36.29% 82.00%, 33.24% 82.00%, 30.19% 82.00%, 27.14% 82.00%, 24.10% 82.00%, 21.05% 82.00%, 18.00% 82.00%, 19.52% 79.14%, 21.05% 76.29%, 22.57% 73.43%, 24.10% 70.57%, 25.62% 67.71%, 27.14% 64.86%, 28.67% 62.00%, 30.19% 59.14%, 31.71% 56.29%, 33.24% 53.43%, 34.76% 50.57%, 36.29% 47.71%, 37.81% 44.86%, 39.33% 42.00%, 40.86% 39.14%, 42.38% 36.29%, 43.90% 33.43%, 45.43% 30.57%, 46.95% 27.71%, 48.48% 24.86%
+    );
+  }
+  50% {
+    clip-path: polygon(
+      22.00% 22.00%, 25.50% 22.00%, 29.00% 22.00%, 32.50% 22.00%, 36.00% 22.00%, 39.50% 22.00%, 43.00% 22.00%, 46.50% 22.00%, 50.00% 22.00%, 53.50% 22.00%, 57.00% 22.00%, 60.50% 22.00%, 64.00% 22.00%, 67.50% 22.00%, 71.00% 22.00%, 74.50% 22.00%, 78.00% 22.00%, 78.00% 25.50%, 78.00% 29.00%, 78.00% 32.50%, 78.00% 36.00%, 78.00% 39.50%, 78.00% 43.00%, 78.00% 46.50%, 78.00% 50.00%, 78.00% 53.50%, 78.00% 57.00%, 78.00% 60.50%, 78.00% 64.00%, 78.00% 67.50%, 78.00% 71.00%, 78.00% 74.50%, 78.00% 78.00%, 74.50% 78.00%, 71.00% 78.00%, 67.50% 78.00%, 64.00% 78.00%, 60.50% 78.00%, 57.00% 78.00%, 53.50% 78.00%, 50.00% 78.00%, 46.50% 78.00%, 43.00% 78.00%, 39.50% 78.00%, 36.00% 78.00%, 32.50% 78.00%, 29.00% 78.00%, 25.50% 78.00%, 22.00% 78.00%, 22.00% 74.50%, 22.00% 71.00%, 22.00% 67.50%, 22.00% 64.00%, 22.00% 60.50%, 22.00% 57.00%, 22.00% 53.50%, 22.00% 50.00%, 22.00% 46.50%, 22.00% 43.00%, 22.00% 39.50%, 22.00% 36.00%, 22.00% 32.50%, 22.00% 29.00%, 22.00% 25.50%
+    );
+  }
+  75% {
+    clip-path: polygon(
+      73.00% 50.00%, 72.89% 47.75%, 72.56% 45.51%, 72.01% 43.32%, 71.25% 41.20%, 70.28% 39.16%, 69.12% 37.22%, 67.78% 35.41%, 66.26% 33.74%, 64.59% 32.22%, 62.78% 30.88%, 60.84% 29.72%, 58.80% 28.75%, 56.68% 27.99%, 54.49% 27.44%, 52.25% 27.11%, 50.00% 27.00%, 47.75% 27.11%, 45.51% 27.44%, 43.32% 27.99%, 41.20% 28.75%, 39.16% 29.72%, 37.22% 30.88%, 35.41% 32.22%, 33.74% 33.74%, 32.22% 35.41%, 30.88% 37.22%, 29.72% 39.16%, 28.75% 41.20%, 27.99% 43.32%, 27.44% 45.51%, 27.11% 47.75%, 27.00% 50.00%, 27.11% 52.25%, 27.44% 54.49%, 27.99% 56.68%, 28.75% 58.80%, 29.72% 60.84%, 30.88% 62.78%, 32.22% 64.59%, 33.74% 66.26%, 35.41% 67.78%, 37.22% 69.12%, 39.16% 70.28%, 41.20% 71.25%, 43.32% 72.01%, 45.51% 72.56%, 47.75% 72.89%, 50.00% 73.00%, 52.25% 72.89%, 54.49% 72.56%, 56.68% 72.01%, 58.80% 71.25%, 60.84% 70.28%, 62.78% 69.12%, 64.59% 67.78%, 66.26% 66.26%, 67.78% 64.59%, 69.12% 62.78%, 70.28% 60.84%, 71.25% 58.80%, 72.01% 56.68%, 72.56% 54.49%, 72.89% 52.25%
+    );
+  }
+}
+
+/* Smoother than ease-in-out: gentle acceleration, no sharp corners at 0/100% */
+.mochi-spinner {
+  width: 52px;
+  height: 52px;
+  display: inline-block;
+  contain: layout style paint;
+  --mochi-spinner-fill: #69cdff;
+  --mochi-spinner-ease: cubic-bezier(0.45, 0, 0.55, 1);
+  animation: mochi-spinner-fill 1.5s var(--mochi-spinner-ease) infinite;
+}
+.mochi-spinner.mochi-light {
+  --mochi-spinner-fill: rgba(255, 255, 255, 0.95);
+  animation: none;
+}
+.mochi-spinner-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.mochi-spinner-squash {
+  animation: mochi-spinner-squash 1.5s var(--mochi-spinner-ease) infinite;
+  transform-origin: 50% 50%;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+.mochi-spinner-shape {
+  fill: var(--mochi-spinner-fill);
+  transform-origin: 50% 50%;
+  animation: mochi-spinner-morph 1.5s var(--mochi-spinner-ease) infinite;
+  will-change: clip-path;
+  backface-visibility: hidden;
+}
+.mochi-spinner.mochi-large {
+  width: 100%;
+  aspect-ratio: 260 / 83;
+  min-height: 52px;
+}
+.mochi-spinner.mochi-large .mochi-spinner-svg {
+  width: 100%;
+  height: auto;
+}
+.mochi-spinner.mochi-large {
+  animation-duration: 2s;
+}
+.mochi-spinner.mochi-large .mochi-spinner-squash,
+.mochi-spinner.mochi-large .mochi-spinner-shape {
+  animation-duration: 2s;
+}
+.mochi-spinner.mochi-spinner-center {
+  /* no-op; layout handled by wrapper */
+}
+

@@ -1,0 +1,372 @@
+/* App shell + top chrome + left menu (extracted from old mochi.css) */
+
+.mochi-appshell {
+  height: 100vh;
+  height: 100dvh; /* dynamic viewport to avoid window scroll on mobile */
+  padding: calc(14px + env(safe-area-inset-top)) 12px calc(14px + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 820px) {
+  .mochi-appshell {
+    flex-direction: column;
+    /* Let panes extend slightly past the viewport without horizontal scroll. */
+    padding-left: 0;
+    padding-right: 0;
+    /* Bring the topmost pane closer to the top edge on phones. */
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    overflow-x: hidden;
+  }
+}
+
+/* Top chrome (outside panes) */
+.mochi-topbar {
+  padding: 10px 18px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+}
+.mochi-topbar-title {
+  font-family: "Mochi Light";
+  font-size: 28px;
+  line-height: 26px;
+  color: #4b4b4b;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mochi-topbar-subtitle {
+  margin-top: 6px;
+  font-family: "Mochi Medium";
+  font-size: 14px;
+  font-style: italic;
+  color: #7d7d7d;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mochi-topbar-user {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+}
+.mochi-topbar-user-meta {
+  text-align: right;
+}
+.mochi-topbar-user-name {
+  font-family: "Mochi Medium";
+  font-size: 14px;
+  font-style: italic;
+  font-weight: bold;
+  color: #323232;
+}
+.mochi-topbar-user-sub {
+  font-family: "Mochi Medium";
+  font-size: 12px;
+  font-style: italic;
+  color: #7d7d7d;
+  margin-top: 2px;
+}
+
+/* Left menu typography + nav */
+.mochi-menu-title {
+  font-family: "Mochi Light";
+  font-size: 28px;
+  line-height: 28px;
+  color: #4b4b4b;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mochi-menu-subtitle {
+  margin-top: 6px;
+  font-family: "Mochi Medium";
+  font-size: 14px;
+  font-style: italic;
+  color: #7d7d7d;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mochi-menu-user {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.mochi-menu-user-meta {
+  text-align: right;
+}
+.mochi-menu-user-name {
+  font-family: "Mochi Medium";
+  font-size: 14px;
+  font-style: italic;
+  font-weight: bold;
+  color: #323232;
+}
+.mochi-menu-user-sub {
+  font-family: "Mochi Medium";
+  font-size: 12px;
+  font-style: italic;
+  color: #7d7d7d;
+  margin-top: 2px;
+}
+
+.mochi-menu-nav {
+  padding: 12px 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Icon-only menu rail (like Mochi side icons) */
+.mochi-pane--iconbar .mochi-menu-nav {
+  padding: 12px 10px 18px;
+  align-items: center;
+}
+.mochi-pane--iconbar .mochi-menu-item {
+  width: 100%;
+}
+.mochi-pane--iconbar .mochi-menu-item .mochi-button-base {
+  justify-content: center;
+}
+.mochi-pane--iconbar .mochi-menu-item-content {
+  width: 100%;
+  justify-content: center;
+}
+.mochi-pane--iconbar .mochi-menu-item-label {
+  display: none;
+}
+
+@media (max-width: 820px) {
+  /* Phone: the menu pane becomes a horizontal icon bar. */
+  .mochi-pane[data-pane-id="menu"].mochi-pane--iconbar .mochi-menu-nav {
+    /* Push icons down so the top round corners are not visually prominent. */
+    padding: 16px 8px 10px;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 8px;
+  }
+  .mochi-pane[data-pane-id="menu"].mochi-pane--iconbar .mochi-menu-item {
+    width: auto;
+  }
+  .mochi-pane[data-pane-id="menu"].mochi-pane--iconbar .mochi-menu-item .mochi-button-base {
+    justify-content: center;
+  }
+}
+
+/* Make Mochi buttons feel like a vertical nav list */
+.mochi-menu-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+}
+.mochi-menu-item .mochi-button-base {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  width: 100%;
+}
+.mochi-menu-item-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.mochi-menu-item-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Selected nav item: add Mochi-like outline */
+.mochi-menu-item.active {
+  border-radius: 14px;
+  background: rgba(105, 205, 255, 0.12);
+  box-shadow: 0 0 0 1px rgba(105, 205, 255, 0.85);
+}
+.mochi-menu-item.active > .mochi-button-base {
+  letter-spacing: 0.2px;
+}
+
+/* LoanManager: Menu (pixel-ish Mochi pane list) */
+.lm-menu-paneHeader {
+  padding: 26px 28px 18px;
+  border-bottom: 0;
+}
+
+.lm-menu-title {
+  font-family: "Mochi Light";
+  font-size: 40px;
+  line-height: 34px;
+  color: #6b6b6b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lm-menu-subtitle {
+  margin-top: 6px;
+  font-family: "Mochi Medium";
+  font-size: 14px;
+  font-style: italic;
+  color: #7d7d7d;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lm-menu-version {
+  font-size: 12px;
+  color: #9d9d9d;
+}
+
+.lm-menu {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 18px 18px;
+  gap: 14px;
+}
+
+.lm-menu-content {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.lm-menu-sectionTitle {
+  font-family: "Mochi Medium";
+  font-size: 18px;
+  font-style: italic;
+  font-weight: bold;
+  color: #4b4b4b;
+  padding: 4px 2px 10px;
+}
+
+.lm-menu-sectionItems {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 2px 0 0;
+}
+
+.lm-menu-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 0 2px;
+  border-radius: 0;
+  text-decoration: none;
+  color: inherit;
+}
+
+.lm-menu-rowLeft {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.lm-menu-rowIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  color: #6b6b6b;
+  opacity: 0.75;
+  flex: 0 0 auto;
+}
+
+.lm-menu-rowLabel {
+  font-family: "Mochi Medium";
+  font-size: 16px;
+  font-style: italic;
+  color: #6b6b6b;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lm-menu-badge {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #69cdff;
+  color: #ffffff;
+  font-family: "Mochi Bold";
+  font-size: 14px;
+  line-height: 1;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.lm-menu-row.active {
+  background: transparent;
+  box-shadow: none;
+}
+
+.lm-menu-row.active .lm-menu-rowLabel {
+  color: #323232;
+}
+
+.lm-menu-row.active .lm-menu-rowIcon {
+  color: #323232;
+  opacity: 1;
+}
+
+.lm-menu-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.lm-menu-user {
+  min-width: 0;
+}
+
+.lm-menu-userName {
+  font-family: "Mochi Medium";
+  font-size: 14px;
+  font-style: italic;
+  font-weight: bold;
+  color: #323232;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lm-menu-userSub {
+  font-family: "Mochi Medium";
+  font-size: 12px;
+  font-style: italic;
+  color: #7d7d7d;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+

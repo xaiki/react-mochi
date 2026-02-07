@@ -1,0 +1,150 @@
+/* Mochi button (extracted from old mochi.css) */
+
+.mochi-button {
+  position: relative;
+  border-width: 0px;
+  margin: 0px;
+  padding: 0px;
+  background-color: transparent;
+  white-space: nowrap;
+}
+.mochi-button.disabled {
+  opacity: 0.4;
+}
+.mochi-button > .mochi-button-base {
+  margin: 0px 6px;
+  padding: 0px;
+  height: 40px;
+  line-height: 40px;
+  vertical-align: middle;
+}
+.mochi-button-base {
+  display: inline-block;
+  font-family: "Mochi Bold Oblique";
+  font-size: 14px;
+  color: #323232;
+  font-style: oblique;
+  font-weight: bold;
+  border-width: 0px;
+  background-color: transparent;
+  letter-spacing: normal;
+  margin: 2px;
+  padding: 1px 0px;
+  white-space: nowrap;
+  overflow: hidden;
+  height: 28px;
+  -webkit-transition: letter-spacing 0.1s ease-in-out;
+  transition: letter-spacing 0.1s ease-in-out;
+}
+
+/* ButtonDecorator (parentheses) — matches Mochi reference */
+.mochi-button-decorator {
+  font-family: "Mochi Bold";
+  font-size: 30px;
+  color: #4b4b4b;
+  font-weight: bold;
+  display: inline-block;
+  vertical-align: top;
+}
+.mochi-button-decorator-bookened {
+  vertical-align: top;
+  margin: 0px;
+  padding: 0px;
+}
+.mochi-button > .mochi-button-decorator-left {
+  padding: 0px 0px 0px 4px;
+  -webkit-transition: -webkit-transform 0.1s ease-in-out;
+  transition: transform 0.1s ease-in-out;
+}
+.mochi-button:hover:not([disabled]) > .mochi-button-decorator-left {
+  -webkit-transform: translateX(-2px);
+  transform: translateX(-2px);
+}
+.mochi-button:active:hover:not([disabled]) > .mochi-button-decorator-left,
+.mochi-button.active > .mochi-button-decorator-left {
+  -webkit-transform: translateX(-4px);
+  transform: translateX(-4px);
+}
+.mochi-button > .mochi-button-decorator-right {
+  padding: 0px 4px 0px 0px;
+  -webkit-transition: -webkit-transform 0.1s ease-in-out;
+  transition: transform 0.1s ease-in-out;
+}
+.mochi-button:hover:not([disabled]) > .mochi-button-decorator-right {
+  -webkit-transform: translateX(2px);
+  transform: translateX(2px);
+}
+.mochi-button:active:hover:not([disabled]) > .mochi-button-decorator-right,
+.mochi-button.active > .mochi-button-decorator-right {
+  -webkit-transform: translateX(4px);
+  transform: translateX(4px);
+}
+
+.mochi-button-bar {
+  position: absolute;
+  top: 35px;
+  left: 0px;
+  height: 1px;
+  width: 100%;
+  background-color: #69cdff;
+}
+.mochi-button > .mochi-button-bar {
+  background-color: transparent;
+  transition: background-color 0.2s linear;
+}
+.mochi-button:hover:not([disabled]) > .mochi-button-bar {
+  background-color: rgba(105, 205, 255, 0.6);
+}
+.mochi-button:active:hover:not([disabled]) > .mochi-button-bar,
+.mochi-button.active > .mochi-button-bar {
+  background-color: #69cdff;
+}
+
+/* Hover affordance without layout shift */
+.mochi-button > .mochi-button-base {
+  -webkit-transition: -webkit-transform 0.12s ease, letter-spacing 0.1s ease-in-out;
+  transition: transform 0.12s ease, letter-spacing 0.1s ease-in-out;
+  will-change: transform;
+}
+.mochi-button:hover:not([disabled]) > .mochi-button-base {
+  -webkit-transform: scaleX(1.03);
+  transform: scaleX(1.03);
+}
+
+/* Warning/destructive variant (matches Mochi redline behavior) */
+.mochi-button-warning > .mochi-button-base {
+  color: #ff4a4a;
+}
+.mochi-button:active:hover:not([disabled]).mochi-button-warning > .mochi-button-bar,
+.mochi-button.active.mochi-button-warning > .mochi-button-bar {
+  background-color: #ff4a4a;
+}
+
+@media (max-width: 520px) {
+  /* Phone: buttons must stay inline; reduce visual footprint. */
+  .mochi-button > .mochi-button-base {
+    margin: 0px 4px;
+    height: 34px;
+    line-height: 34px;
+  }
+  .mochi-button-base {
+    font-size: 12px;
+    height: 24px;
+    margin: 1px;
+    padding: 0px;
+    letter-spacing: -0.1px;
+  }
+  .mochi-button-decorator {
+    font-size: 24px;
+  }
+  .mochi-button > .mochi-button-decorator-left {
+    padding-left: 2px;
+  }
+  .mochi-button > .mochi-button-decorator-right {
+    padding-right: 2px;
+  }
+  .mochi-button-bar {
+    top: 30px;
+  }
+}
+

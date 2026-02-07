@@ -1,0 +1,166 @@
+/* Generic responsive pill wrapper + status pill colors (extracted from old mochi.css) */
+
+.mochi-pill {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  max-width: 100%;
+  container-name: mochi-pill;
+  
+}
+.mochi-pill-full {
+  display: inline-flex;
+}
+.mochi-pill-compact {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.mochi-pill-dot {
+  flex: 0 0 8px;
+  display: inline-flex;
+}
+/* NOTE:
+   We render either full OR compact in React (never both),
+   so we don't need container-query switching here. */
+
+.mochi-status-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  background: rgba(255, 255, 255, 0.86);
+  font-family: "Mochi Medium";
+  font-size: 10px;
+  font-style: italic;
+  font-weight: bold;
+  letter-spacing: 0.2px;
+  color: #4b4b4b;
+  white-space: nowrap;
+  gap: 8px;
+}
+
+.mochi-status-pill[data-status="DRAFT"] {
+  border-color: rgba(0, 0, 0, 0.18);
+  background: rgba(255, 255, 255, 0.86);
+  color: #4b4b4b;
+}
+
+.mochi-status-pillDot {
+  flex: 0 0 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+}
+.mochi-status-pillCount {
+  margin-left: 8px;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Mochi Bold Oblique";
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.98);
+  background: rgba(84, 170, 230, 0.95);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    0 1px 0 rgba(0, 0, 0, 0.06);
+}
+.mochi-status-pillCount--ghost {
+  visibility: hidden;
+}
+
+/* In compact mode, spacing is controlled by the container's gap. */
+.mochi-pill-compact .mochi-status-pillCount {
+  margin-left: 0;
+}
+
+.mochi-status-pill[data-status="SIGNED"] {
+  border-color: rgba(91, 208, 106, 0.85);
+  background: rgba(91, 208, 106, 0.16);
+  color: rgba(17, 77, 33, 0.95);
+}
+.mochi-status-pill[data-status="PENDING"] {
+  border-color: rgba(84, 170, 230, 0.85);
+  background: rgba(84, 170, 230, 0.14);
+  color: rgba(20, 67, 97, 0.95);
+}
+.mochi-status-pill[data-status="STALE"] {
+  border-color: rgba(242, 153, 74, 0.85);
+  background: rgba(242, 153, 74, 0.14);
+  color: rgba(97, 51, 13, 0.95);
+}
+.mochi-status-pill[data-status="PENDING_SIGNATURE"] {
+  border-color: rgba(242, 153, 74, 0.85);
+}
+.mochi-status-pill[data-status="PENDING_SIGNATURE"] .mochi-status-pillCount {
+  background: rgba(242, 153, 74, 0.95);
+}
+.mochi-status-pill[data-status="CREDITOR_SIGNED"],
+.mochi-status-pill[data-status="DEBTOR_SIGNED"],
+.mochi-status-pill[data-status="OBSERVER_SIGNED"] {
+  border-color: rgba(242, 153, 74, 0.85);
+  background: rgba(242, 153, 74, 0.14);
+  color: rgba(97, 51, 13, 0.95);
+}
+.mochi-status-pill[data-status="ACTIVE"] {
+  border-color: rgba(91, 208, 106, 0.7);
+}
+.mochi-status-pill[data-status="IN_GRACE_PERIOD"] {
+  border-color: rgba(242, 201, 76, 0.85);
+}
+.mochi-status-pill[data-status="DEFAULTED"],
+.mochi-status-pill[data-status="DELINQUENT"],
+.mochi-status-pill[data-status="OVERDUE"] {
+  border-color: rgba(255, 74, 74, 0.8);
+}
+
+/* Roles (User management) */
+.mochi-status-pill[data-status="ADMIN"] {
+  border-color: rgba(168, 85, 247, 0.75);
+  background: rgba(168, 85, 247, 0.12);
+  color: rgba(88, 28, 135, 0.95);
+}
+.mochi-status-pill[data-status="CREDITOR"] {
+  border-color: rgba(84, 170, 230, 0.85);
+  background: rgba(84, 170, 230, 0.14);
+  color: rgba(20, 67, 97, 0.95);
+}
+.mochi-status-pill[data-status="DEBTOR"] {
+  border-color: rgba(242, 153, 74, 0.85);
+  background: rgba(242, 153, 74, 0.14);
+  color: rgba(97, 51, 13, 0.95);
+}
+.mochi-status-pill[data-status="OBSERVER"] {
+  border-color: rgba(0, 0, 0, 0.22);
+  background: rgba(0, 0, 0, 0.03);
+  color: rgba(0, 0, 0, 0.75);
+}
+.mochi-status-pill[data-status="BLOCKED"] {
+  border-color: rgba(255, 74, 74, 0.8);
+  background: rgba(255, 74, 74, 0.1);
+  color: rgba(120, 22, 22, 0.95);
+}
+.mochi-status-pill[data-status="PENDING_APPROVAL"] {
+  border-color: rgba(242, 153, 74, 0.85);
+  background: rgba(242, 153, 74, 0.14);
+  color: rgba(97, 51, 13, 0.95);
+}
+
+/* Rate / data: no data or error (treated as error in UI) */
+.mochi-status-pill[data-status="NO_DATA"] {
+  border-color: rgba(255, 74, 74, 0.8);
+  background: rgba(255, 74, 74, 0.1);
+  color: rgba(120, 22, 22, 0.95);
+}
+
+/* Self marker */
+.mochi-status-pill[data-status="YOU"] {
+  border-color: rgba(34, 197, 94, 0.8);
+  background: rgba(34, 197, 94, 0.12);
+  color: rgba(12, 74, 38, 0.95);
+}

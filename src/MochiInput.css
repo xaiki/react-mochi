@@ -1,0 +1,36 @@
+/* Input decorator (extracted from old mochi.css) */
+
+.mochi-input-decorator {
+  padding: 1px 8px 5px 8px;
+  border-radius: 16px;
+  border: 1px solid;
+  border-color: #a2a2a2;
+  background-color: white;
+  margin: 0;
+}
+.mochi-input-decorator:focus-within {
+  border-color: #69cdff;
+}
+.mochi-input-decorator.mochi-focused {
+  border-color: #69cdff;
+}
+.mochi-input-decorator > input {
+  margin: 0px;
+  padding: 0px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: transparent;
+  box-shadow: none;
+  font-size: 14px;
+  font-family: "Mochi Medium";
+  color: #4b4b4b;
+  font-style: italic;
+}
+.mochi-input-decorator.mochi-focused > input {
+  cursor: text;
+}
+.mochi-input-decorator.mochi-disabled {
+  opacity: 0.4;
+}
+

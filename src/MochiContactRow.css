@@ -1,0 +1,216 @@
+/* Contact row + avatars + status dot (extracted from old mochi.css) */
+
+.mochi-contact-row {
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mochi-contact-row__avatar {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+}
+
+.mochi-contact-row__status {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+}
+
+.mochi-contact-btn {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+  padding: 10px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+.mochi-contact-row:last-child .mochi-contact-btn {
+  border-bottom: none;
+}
+
+.mochi-contact-avatar {
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 2px solid rgba(0, 0, 0, 0.16);
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Mochi Medium";
+  font-size: 12px;
+  font-style: italic;
+  color: #4b4b4b;
+  opacity: 0.9;
+}
+
+/* Interlaced creditor+debtor avatars (Mochi contacts-style) */
+.mochi-contact-avatarStack {
+  flex: 0 0 var(--mochi-avatarStack-width, 46px);
+  width: var(--mochi-avatarStack-width, 46px);
+  height: 36px;
+  position: relative;
+}
+.mochi-contact-avatarChip {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Mochi Medium";
+  font-size: 11px;
+  font-style: italic;
+  color: #4b4b4b;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  user-select: none;
+}
+.mochi-contact-avatarChip--creditor {
+  left: 0;
+  z-index: 1;
+  border: 2px solid rgba(0, 0, 0, 0.14);
+  background: rgba(255, 255, 255, 0.72);
+  opacity: 0.92;
+}
+.mochi-contact-avatarChip--debtor {
+  left: 16px;
+  z-index: 2;
+  border: 2px solid rgba(0, 0, 0, 0.18);
+  background: rgba(255, 255, 255, 0.86);
+  opacity: 0.96;
+}
+.mochi-contact-avatarChip--observer,
+.mochi-contact-avatarChip--observerMore {
+  left: 32px;
+  z-index: 3;
+  border: 2px solid rgba(20, 60, 120, 0.18);
+  background: rgba(105, 205, 255, 0.32);
+  opacity: 0.96;
+}
+.mochi-contact-avatarChip--observer[data-obs-idx="1"] {
+  left: 48px;
+  z-index: 4;
+}
+.mochi-contact-avatarChip--observerMore {
+  left: 64px;
+  z-index: 5;
+  background: rgba(255, 255, 255, 0.72);
+  border-color: rgba(0, 0, 0, 0.16);
+}
+
+.mochi-contact-dot--inline {
+  position: absolute;
+  top: 6px;
+  right: -2px;
+  z-index: 6;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6), 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.mochi-contact-name {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: "Mochi Medium";
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  color: #4b4b4b;
+}
+.mochi-contact-sub {
+  display: block;
+  margin-top: 4px;
+  font-family: "Mochi Medium";
+  font-size: 12px;
+  font-style: italic;
+  color: #7d7d7d;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mochi-contact-dot {
+  flex: 0 0 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #a2a2a2;
+  opacity: 0.85;
+}
+.mochi-contact-dot[data-status="ACTIVE"] {
+  background: #5bd06a;
+}
+.mochi-contact-dot[data-status="IN_GRACE_PERIOD"] {
+  background: #f2c94c;
+}
+.mochi-contact-dot[data-status="PENDING_SIGNATURE"] {
+  background: #f2994a;
+}
+.mochi-contact-dot[data-status="STALE"],
+.mochi-contact-dot[data-status="CREDITOR_SIGNED"],
+.mochi-contact-dot[data-status="DEBTOR_SIGNED"],
+.mochi-contact-dot[data-status="OBSERVER_SIGNED"] {
+  background: #f2994a;
+}
+.mochi-contact-dot[data-status="SIGNED"] {
+  background: #5bd06a;
+}
+.mochi-contact-dot[data-status="PENDING"] {
+  background: #69cdff;
+}
+.mochi-contact-dot[data-status="DEFAULTED"],
+.mochi-contact-dot[data-status="DELINQUENT"],
+.mochi-contact-dot[data-status="OVERDUE"] {
+  background: #ff4a4a;
+}
+
+/* Compact loans list view (used during signing) */
+.mochi-contact-row--compact {
+  padding: 0 10px;
+}
+.mochi-contact-row--compact .mochi-contact-row__avatar {
+  flex: 0 0 auto;
+}
+.mochi-contact-btn--compact {
+  padding: 10px 6px;
+  gap: 8px;
+  justify-content: space-between;
+}
+.mochi-contact-btn--compact .mochi-contact-sub {
+  display: none;
+}
+.mochi-contact-row--compact .mochi-contact-avatarStack,
+.mochi-contact-btn--compact .mochi-contact-avatarStack {
+  transform: scale(0.92);
+  opacity: 0.95;
+}
+.mochi-contact-btn--compact .mochi-contact-name {
+  font-size: 13px;
+}
+.mochi-contact-row--compact .mochi-contact-row__status {
+  display: none;
+}
+
+.mochi-contact-status {
+  flex: 0 0 auto;
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+}
+

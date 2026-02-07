@@ -1,0 +1,161 @@
+/* Mochi-ish autocomplete (ContextualPopup-like) */
+
+.mochi-autocomplete {
+  position: relative;
+}
+.mochi-autocomplete-popover {
+  position: absolute;
+  z-index: 50;
+  font-size: 14px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.44);
+  border: 2px solid #646464;
+  border-radius: 24px;
+  padding: 6px;
+  color: #4b4b4b;
+  background-color: #ffffff;
+  min-width: 150px;
+  margin-top: 2px;
+  overflow: visible; /* nub lives outside */
+}
+
+/* Placement */
+.mochi-autocomplete-popover[data-dir="below"] {
+  left: 0;
+  right: 0;
+  top: calc(100% + 20px);
+}
+.mochi-autocomplete-popover[data-dir="above"] {
+  left: 0;
+  right: 0;
+  top: auto;
+  bottom: calc(100% + 10px);
+  margin-top: 0;
+}
+.mochi-autocomplete-popover[data-dir="right"] {
+  top: 0;
+  left: calc(100% + 10px);
+  right: auto;
+  width: min(340px, 70vw);
+  margin-top: 0;
+}
+.mochi-autocomplete-popover[data-dir="left"] {
+  top: 0;
+  right: calc(100% + 10px);
+  left: auto;
+  width: min(340px, 70vw);
+  margin-top: 0;
+}
+
+/* Nub */
+.mochi-autocomplete-popover::after {
+  content: "";
+  position: absolute;
+}
+.mochi-autocomplete-popover[data-dir="below"]::after {
+  top: -20px;
+  left: var(--mochi-nub-left, 34%);
+  width: 71px;
+  height: 20px;
+  background: transparent url("/mochi/images/contextual-popup-nubs/up.png") no-repeat;
+}
+.mochi-autocomplete-popover[data-dir="above"]::after {
+  top: 100%;
+  left: var(--mochi-nub-left, 34%);
+  width: 71px;
+  height: 20px;
+  background: transparent url("/mochi/images/contextual-popup-nubs/down.png") no-repeat;
+}
+.mochi-autocomplete-popover[data-dir="right"]::after {
+  left: 0%;
+  margin-left: -20px;
+  top: var(--mochi-nub-top, 35%);
+  width: 20px;
+  height: 71px;
+  background: transparent url("/mochi/images/contextual-popup-nubs/left.png") no-repeat;
+}
+.mochi-autocomplete-popover[data-dir="left"]::after {
+  left: 100%;
+  top: var(--mochi-nub-top, 35%);
+  width: 20px;
+  height: 71px;
+  background: transparent url("/mochi/images/contextual-popup-nubs/right.png") no-repeat;
+}
+
+.mochi-autocomplete-popoverSurface {
+  border-radius: 18px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: min(320px, 60vh);
+  padding: 8px;
+}
+.mochi-autocomplete-item {
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 10px;
+  border-radius: 14px;
+  background: transparent;
+  text-align: left;
+}
+.mochi-autocomplete-item[data-active="true"] {
+  background: rgba(105, 205, 255, 0.16);
+}
+.mochi-autocomplete-itemTitle {
+  font-family: "Mochi Medium";
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  color: #4b4b4b;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mochi-autocomplete-itemSub {
+  font-family: "Mochi Medium";
+  font-size: 12px;
+  font-style: italic;
+  color: #7d7d7d;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  white-space: nowrap;
+}
+.mochi-autocomplete-empty {
+  padding: 12px 12px;
+  font-family: "Mochi Medium";
+  font-size: 12px;
+  font-style: italic;
+  color: #7d7d7d;
+}
+
+.mochi-autocomplete-footer {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(75, 75, 75, 0.18);
+}
+
+/* When the popover is "footer only" (invitation mode), the divider is redundant. */
+.mochi-autocomplete-footer--solo {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+/* AnchoredActionPopover wraps body (e.g. MochiAutocomplete) inside this surface; allow the
+   inner autocomplete dropdown to escape clipping so "Nuevo acuerdo" autocomplete works. */
+.mochi-anchoredActionPopover .mochi-autocomplete-popoverSurface {
+  overflow: visible;
+}
+
+/* Grown variant: let popover height follow content, up to viewport, then scroll. */
+.mochi-anchoredActionPopover--grow .mochi-autocomplete-popoverSurface {
+  max-height: 85vh;
+  overflow-y: auto;
+}
+

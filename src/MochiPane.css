@@ -1,0 +1,700 @@
+/* Mochi pane CSS (extracted from /public/mochi/css/mochi.css).
+   Keep this file in sync with MochiPane/MochiPaneStack behavior. */
+
+.mochi-workspace {
+  flex: 1 1 auto;
+  min-height: 0; /* critical for nested scrollers */
+  display: flex;
+  min-width: 0;
+}
+
+.mochi-pane {
+  position: relative;
+  border-radius: 28px;
+  /* Allow header text to overflow under next pane */
+  overflow: visible;
+
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* allow child scrollers to shrink */
+
+  /* Default sizing is controlled by the stack via flex-grow. */
+  flex: 0 1 auto;
+  width: auto;
+  transition: flex-basis 0.18s ease, width 0.18s ease, opacity 0.18s ease;
+}
+
+.mochi-pane-surface {
+  border-radius: 28px;
+  background: var(--mochi-pane-bg, rgba(255, 255, 255, 0.92));
+  border: 2px solid var(--mochi-pane-border, #646464);
+  box-shadow: var(
+    --mochi-pane-shadow,
+    0 16px 44px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9)
+  );
+  /* Let header overflow; body will re-clip. */
+  overflow: visible;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.mochi-pane[data-main="true"] {
+  --mochi-pane-grow: 32;
+  flex: var(--mochi-pane-grow, 1) 1 0;
+  width: auto;
+  min-width: var(--mochi-pane-min-width, 360px);
+}
+
+/* Let clicks pass through the main pane surface where it overlaps left panes,
+   so clicking the visible "tab" of a non-main pane (e.g. "Plantillas") navigates. */
+.mochi-pane-surface--main-pointer-through {
+  pointer-events: none;
+}
+.mochi-pane-surface--main-pointer-through > .mochi-pane-header,
+.mochi-pane-surface--main-pointer-through > .mochi-pane-close,
+.mochi-pane-surface--main-pointer-through > .mochi-pane-body {
+  pointer-events: auto;
+}
+
+/* Pane depth shading (left panes darker, like Mochi panels) */
+.mochi-pane[data-depth="0"] {
+  --mochi-pane-bg: rgba(255, 255, 255, 0.92);
+  --mochi-pane-border: #646464;
+  --mochi-pane-shadow:
+    0 16px 44px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+.mochi-pane[data-depth="1"] {
+  --mochi-pane-bg: rgba(250, 250, 250, 0.92);
+  --mochi-pane-border: #5f5f5f;
+  --mochi-pane-shadow:
+    0 14px 36px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.88),
+    inset 0 0 140px rgba(0, 0, 0, 0.045);
+}
+.mochi-pane[data-depth="2"],
+.mochi-pane[data-depth="3"],
+.mochi-pane[data-depth="4"] {
+  --mochi-pane-bg: rgba(245, 245, 245, 0.92);
+  --mochi-pane-border: #585858;
+  --mochi-pane-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.84),
+    inset 0 0 170px rgba(0, 0, 0, 0.07);
+}
+
+.mochi-pane--menu {
+  --mochi-pane-preferred-width: 320px;
+  --mochi-pane-min-width: 240px;
+}
+
+.mochi-pane--iconbar {
+  --mochi-pane-preferred-width: 76px;
+  --mochi-pane-min-width: 76px;
+}
+
+.mochi-pane--panel {
+  --mochi-pane-preferred-width: 420px;
+  --mochi-pane-min-width: 320px;
+}
+.mochi-pane--wide {
+  --mochi-pane-preferred-width: 560px;
+  --mochi-pane-min-width: 360px;
+}
+
+@media (max-width: 960px) {
+  .mochi-pane--menu {
+    --mochi-pane-preferred-width: 280px;
+  }
+}
+
+@media (max-width: 820px) {
+  .mochi-pane--menu {
+    flex: none;
+    width: auto;
+  }
+  .mochi-pane--panel,
+  .mochi-pane--wide {
+    flex: none;
+    width: auto;
+  }
+}
+
+.mochi-pane--content {
+  flex: 1 1 auto;
+  width: auto;
+}
+
+.mochi-pane-stack {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0; /* allow inner pane scrollers to work */
+  height: 100%;
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Base pane growth: 1,2,4,8,... so rightmost grows more.
+   min-height: 100% so panes fill the stack height even when content is short. */
+.mochi-pane-stack > .mochi-pane {
+  flex: var(--mochi-pane-grow, 1) 1 0;
+  width: auto;
+  min-width: var(--mochi-pane-min-width, 240px);
+  min-height: 100%;
+}
+.mochi-pane-stack > .mochi-pane:nth-child(1) {
+  --mochi-pane-grow: 1;
+}
+.mochi-pane-stack > .mochi-pane:nth-child(2) {
+  --mochi-pane-grow: 2;
+}
+/* When there are only 2 panes (e.g. Menu + Logs), give the content pane same flex as main pane in 3-pane layout */
+.mochi-pane-stack > .mochi-pane:nth-child(2):last-child {
+  --mochi-pane-grow: 4;
+}
+.mochi-pane-stack > .mochi-pane:nth-child(3) {
+  --mochi-pane-grow: 4;
+}
+.mochi-pane-stack > .mochi-pane:nth-child(4) {
+  --mochi-pane-grow: 8;
+}
+.mochi-pane-stack > .mochi-pane:nth-child(5) {
+  --mochi-pane-grow: 16;
+}
+.mochi-pane-stack > .mochi-pane:nth-child(6) {
+  --mochi-pane-grow: 32;
+}
+
+/* Iconbar should remain fixed width */
+.mochi-pane-stack > .mochi-pane.mochi-pane--iconbar {
+  flex: 0 0 76px;
+  min-width: 76px;
+  width: 76px;
+}
+
+/* Slight overlap to mimic Mochi "paper panes" */
+.mochi-pane-stack > .mochi-pane:not(:first-child) {
+  margin-left: -14px;
+}
+
+/* Reference 3-pane look (match screenshot: stronger overlap + specific headers) */
+.mochi-pane-stack--ref3 {
+  --mochi-ref3-overlap: 56px;
+  gap: 0;
+  padding-right: 12px; /* keep rightmost shadow visible when scrolling */
+}
+.mochi-pane-stack--ref3 > .mochi-pane:not(:first-child) {
+  margin-left: calc(-1 * var(--mochi-ref3-overlap));
+}
+
+/* Let ears/overlaps render outside, but keep content clipped by the surface */
+.mochi-pane-stack > .mochi-pane {
+  overflow: visible;
+}
+.mochi-pane-stack > .mochi-pane > .mochi-pane-surface {
+  position: relative;
+  z-index: 1; /* keep ear behind surface */
+}
+.mochi-pane-stack--ref3 > .mochi-pane > .mochi-pane-surface {
+  border-radius: 30px;
+}
+
+/* Any pane that is overlapped by a pane to its right should inset its content
+   so text/cards aren't clipped under the overlap. */
+.mochi-pane-stack--ref3 > .mochi-pane:not(:last-child) .mochi-pane-header {
+  padding-right: calc(32px + var(--mochi-ref3-overlap));
+}
+.mochi-pane-stack--ref3 > .mochi-pane:not(:last-child) .mochi-pane-scroll--content {
+  padding-right: calc(32px + var(--mochi-ref3-overlap));
+}
+
+/* "Ear" like the reference (asset-driven, pixel-consistent). */
+.mochi-pane-stack > .mochi-pane:not(:first-child)::before {
+  content: "";
+  position: absolute;
+
+  --mochi-ear-w: 96px;
+  --mochi-ear-h: 170px;
+  --mochi-ear-inset: 23px;
+
+  left: calc(-1 * var(--mochi-ear-w) + var(--mochi-ear-inset));
+  bottom: -2px; /* align with 2px surface border */
+  width: var(--mochi-ear-w);
+  height: var(--mochi-ear-h);
+  z-index: 2; /* front of surface */
+
+  background: transparent url(/mochi/images/pane-ears/ear-left-bottom.svg) no-repeat;
+  background-size: 100% 100%;
+  background-position: left bottom;
+  pointer-events: none;
+}
+
+/* In ref3, use more opaque surfaces so depth shading reads */
+.mochi-pane-stack--ref3 > .mochi-pane[data-depth="0"] {
+  --mochi-pane-bg: rgba(255, 255, 255, 0.98);
+}
+.mochi-pane-stack--ref3 > .mochi-pane[data-depth="1"] {
+  --mochi-pane-bg: rgba(244, 244, 244, 0.98);
+  --mochi-pane-border: #5a5a5a;
+  --mochi-pane-shadow:
+    0 14px 36px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.88),
+    inset 0 0 190px rgba(0, 0, 0, 0.075);
+}
+.mochi-pane-stack--ref3 > .mochi-pane[data-depth="2"],
+.mochi-pane-stack--ref3 > .mochi-pane[data-depth="3"],
+.mochi-pane-stack--ref3 > .mochi-pane[data-depth="4"] {
+  --mochi-pane-bg: rgba(232, 232, 232, 0.98);
+  --mochi-pane-border: #535353;
+  --mochi-pane-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.84),
+    inset 0 0 190px rgba(0, 0, 0, 0.085);
+}
+
+/* Also darken the surface a touch (helps even on uniform backdrops) */
+.mochi-pane-stack--ref3 > .mochi-pane[data-depth="1"] > .mochi-pane-surface {
+  filter: brightness(0.985);
+}
+.mochi-pane-stack--ref3 > .mochi-pane[data-depth="2"] > .mochi-pane-surface,
+.mochi-pane-stack--ref3 > .mochi-pane[data-depth="3"] > .mochi-pane-surface,
+.mochi-pane-stack--ref3 > .mochi-pane[data-depth="4"] > .mochi-pane-surface {
+  filter: brightness(0.97);
+}
+
+/* Header typography like screenshot (Header I/II/III + optional count) */
+.mochi-pane-stack--ref3 .mochi-pane-header,
+.mochi-pane-header.mochi-pane-header--ref {
+  padding: 28px 32px 12px;
+  border-bottom: 0;
+  background: transparent;
+}
+.mochi-pane-stack--ref3 .mochi-pane-header {
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.mochi-pane-stack--ref3 .mochi-pane-title--h2 {
+  font-family: "Mochi Light";
+  font-size: 36px;
+  line-height: 32px;
+  color: #4b4b4b;
+  padding-top: 2px;
+  text-transform: uppercase;
+  font-style: normal;
+}
+.mochi-pane-headerTopRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: nowrap;
+}
+.mochi-pane-title--h1 {
+  font-family: "Mochi Light";
+  font-size: 40px;
+  line-height: 34px;
+  color: #6b6b6b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.mochi-pane-headerCount {
+  flex: 0 0 auto;
+  font-family: "Mochi Light";
+  font-size: 38px;
+  line-height: 34px;
+  color: #6b6b6b;
+  opacity: 0.95;
+  padding-left: 10px;
+}
+
+@media (max-width: 820px) {
+  /* Phone layout:
+     - menu pane becomes a horizontal bar (via MochiAppShell.css)
+     - other panes become a vertical "deck" with a small peek
+     - panes are slightly wider so the border sits off-screen (no horizontal scroll) */
+
+  .mochi-workspace {
+    overflow-x: hidden;
+  }
+
+  .mochi-pane-stack {
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: auto;
+    gap: 0;
+    padding-right: 0;
+  }
+
+  /* Let CONTENT panes extend past viewport horizontally without scrolling
+     (so the border sits off-screen), but keep the MENU pane full width. */
+  .mochi-pane-stack > .mochi-pane:not([data-pane-id="menu"]) {
+    flex: 0 0 auto;
+    /* Keep the "border off-screen" feel, but don't hide actionable content. */
+    width: calc(100% + 12px);
+    margin-left: -6px;
+    margin-right: -6px;
+  }
+
+  /* Menu stays at the very top as a compact bar only (do not stretch to full height). */
+  .mochi-pane-stack > .mochi-pane[data-pane-id="menu"] {
+    position: sticky;
+    top: 0;
+    /* Must stay above the stacked panes (override inline z-index). */
+    z-index: 1000 !important;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    /* Nudge up slightly so the top rounded corners sit off-screen. */
+    margin-top: -10px;
+    /* Prevent menu from taking full height: base rule has min-height: 100% which breaks mobile. */
+    min-height: 0;
+    flex: 0 0 auto;
+    height: auto;
+  }
+
+  /* The first content pane sits under the menu; later panes overlap as a deck. */
+  .mochi-pane-stack > .mochi-pane:not([data-pane-id="menu"]) {
+    --mochi-mobile-menu-h: 68px;
+    --mochi-mobile-peek: 22px;
+    --mochi-mobile-pane-h: calc(100dvh - var(--mochi-mobile-menu-h) - 12px - env(safe-area-inset-bottom));
+    height: var(--mochi-mobile-pane-h);
+    position: sticky;
+    top: calc(var(--mochi-mobile-menu-h) + var(--mochi-mobile-stack-offset, 0px));
+  }
+
+  .mochi-pane-stack > .mochi-pane:nth-child(2) {
+    /* First content pane: fully visible. */
+    margin-top: 12px;
+    --mochi-mobile-stack-offset: 0px;
+  }
+
+  /* Stack the rest: only a small top strip (peek) is visible. */
+  .mochi-pane-stack > .mochi-pane:nth-child(n + 3) {
+    margin-top: calc(-1 * (var(--mochi-mobile-pane-h) - var(--mochi-mobile-peek)));
+  }
+  .mochi-pane-stack > .mochi-pane:nth-child(3) {
+    --mochi-mobile-stack-offset: 8px;
+  }
+  .mochi-pane-stack > .mochi-pane:nth-child(4) {
+    --mochi-mobile-stack-offset: 16px;
+  }
+  .mochi-pane-stack > .mochi-pane:nth-child(5) {
+    --mochi-mobile-stack-offset: 24px;
+  }
+  .mochi-pane-stack > .mochi-pane:nth-child(6) {
+    --mochi-mobile-stack-offset: 32px;
+  }
+
+  /* Re-use the ear language, but rotate it to the top-left on mobile. */
+  .mochi-pane-stack > .mochi-pane:nth-child(n + 3)::before {
+    display: block;
+    bottom: auto;
+    top: -2px; /* align with 2px surface border */
+    transform: scaleY(-1);
+    transform-origin: top left;
+  }
+
+  /* Ref3 special-case: keep it in deck mode too. */
+  .mochi-pane-stack--ref3 {
+    gap: 0;
+    padding-right: 0;
+  }
+
+  /* IMPORTANT: loan sign/confirm has desktop-specific flex sizing that
+     breaks the phone "deck" math (flex-basis overrides our height). */
+  .mochi-pane-stack--loans-sign > .mochi-pane {
+    flex: 0 0 auto !important;
+    max-width: none !important;
+  }
+  .mochi-pane-stack--loans-sign > .mochi-pane[data-pane-id="menu"] {
+    width: 100% !important;
+  }
+}
+
+/* If the stack can't mark a "main" pane (e.g. panes are rendered inside <Outlet/>),
+   ensure the rightmost pane still expands. Use flex-basis: 0 so the pane fills
+   vertical space even when content is short (e.g. Logs with few events). */
+.mochi-pane-stack > .mochi-pane:last-child {
+  --mochi-pane-grow: 16;
+  flex: var(--mochi-pane-grow, 16) 1 0;
+  width: auto;
+}
+
+/* Loans "Nuevo préstamo": FORCE 70/20/10 via flex ratios (7/2/1). */
+.mochi-pane-stack--loans-new > .mochi-pane {
+  flex-basis: 0;
+  width: auto;
+  margin-left: 0; /* avoid overlap affecting perceived ratios */
+}
+.mochi-pane-stack--loans-new.mochi-pane-stack--ref3 > .mochi-pane:not(:first-child) {
+  /* Re-enable reference overlap while keeping flex ratios */
+  margin-left: calc(-1 * var(--mochi-ref3-overlap));
+}
+.mochi-pane-stack--loans-new > .mochi-pane[data-pane-id="menu"] {
+  flex-grow: 1;
+  min-width: 76px;
+}
+.mochi-pane-stack--loans-new > .mochi-pane[data-pane-id="loans"] {
+  flex-grow: 2;
+  min-width: 320px;
+}
+.mochi-pane-stack--loans-new > .mochi-pane[data-pane-id="loan-edit"] {
+  flex-grow: 7;
+  min-width: 360px;
+}
+
+/* Loans signing / confirmation mode */
+.mochi-pane-stack--loans-sign > .mochi-pane {
+  flex-basis: 0;
+  width: auto;
+  margin-left: 0; /* keep sizing predictable */
+}
+
+.mochi-pane-stack--loans-sign > .mochi-pane[data-pane-id="menu"] {
+  flex: 0 0 76px;
+  min-width: 76px;
+}
+
+.mochi-pane-stack--loans-sign > .mochi-pane[data-pane-id="loans"] {
+  flex: 0 0 118px;
+  max-width: 140px;
+}
+
+/* When the loans pane is maximally collapsed (sign flow), hide the search field */
+.mochi-pane-stack--loans-sign > .mochi-pane[data-pane-id="loans"] .mochi-pane-searchRow {
+  display: none;
+}
+
+.mochi-pane-stack--loans-sign > .mochi-pane[data-pane-id="loan-detail"] {
+  flex: 0 0 20%;
+  max-width: 20%;
+}
+
+.mochi-pane-stack--loans-sign > .mochi-pane[data-pane-id="loan-sign"] {
+  flex: 1 1 auto;
+  min-width: 360px;
+}
+
+.mochi-pane-stack::-webkit-scrollbar {
+  display: none;
+}
+
+/* (phone behavior handled above) */
+
+.mochi-pane-header {
+  padding: 18px 24px 14px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  background: transparent;
+  position: relative;
+  z-index: 1;
+}
+
+/* When the pane has a close button, reserve space so header actions (Firmar, Borrar) don't overlap it */
+.mochi-pane-surface:has(.mochi-pane-close) .mochi-pane-header {
+  padding-right: 56px;
+}
+.mochi-pane-stack--ref3 > .mochi-pane .mochi-pane-surface:has(.mochi-pane-close) .mochi-pane-header {
+  padding-right: calc(32px + 24px);
+}
+
+/* Built-in close button (used by detail panes) */
+.mochi-pane-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  z-index: 10;
+
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  font-size: 20px;
+  line-height: 1;
+  color: #323232;
+}
+.mochi-pane-close:hover {
+  background: rgba(255, 255, 255, 0.92);
+}
+.mochi-pane-close:active {
+  transform: translateY(1px);
+}
+.mochi-pane-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 28px 28px 0 0;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(245, 245, 245, 0.55));
+}
+
+.mochi-pane-header.mochi-pane-header--list {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+.mochi-pane-searchRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.mochi-pane-search {
+  position: relative;
+  width: 100%;
+}
+.mochi-pane-searchIcon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #7d7d7d;
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.mochi-pane-body {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0; /* critical: allow inner overflow container to size */
+  overflow: hidden;
+  border-radius: 0 0 28px 28px;
+}
+
+/* When a pane has no header, the body is the top-most element and must be rounded too. */
+.mochi-pane-body--noHeader {
+  border-radius: 28px;
+}
+
+.mochi-pane-scroll {
+  height: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mochi-pane-scroll--content {
+  padding: 16px 0 0;
+}
+
+.mochi-pane-scroll--newloan {
+  height: 100%;
+  overflow: hidden;
+  padding: 0;
+}
+.mochi-pane-scroll--split {
+  height: 100%;
+  overflow: hidden;
+  padding: 0;
+}
+
+@media (max-width: 820px) {
+  /* Phone: SplitScrollColumns stacks vertically, so the OUTER pane must scroll. */
+  .mochi-pane-scroll--split {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Split-pane search: keep it only in the left column */
+.mochi-pane-splitSearch {
+  margin: 0 0 16px;
+}
+
+/* Pane header title levels */
+.mochi-pane-title {
+  min-width: 0;
+  /* Single line, no ellipsis; allow overflow under next pane */
+  white-space: nowrap;
+  overflow: visible;
+  text-overflow: clip;
+}
+.mochi-pane-title--h2 {
+  font-family: "Mochi Medium";
+  font-size: 18px;
+  font-style: italic;
+  color: #323232;
+  line-height: 20px;
+}
+
+/* The scrollfade overlays */
+.mochi-scrollfade-top,
+.mochi-scrollfade-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 44px;
+  pointer-events: none;
+  z-index: 5;
+  /* Match pane inner clipping (no sharp corners). */
+  border-radius: var(--mochi-scrollfade-radius, 24px);
+}
+.mochi-scrollfade-top {
+  top: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  background: linear-gradient(to bottom, rgba(245, 245, 245, 1), rgba(245, 245, 245, 0));
+}
+.mochi-scrollfade-bottom {
+  bottom: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  background: linear-gradient(to top, rgba(245, 245, 245, 1), rgba(245, 245, 245, 0));
+}
+
+/* Pane-specific scrollfade: match pane background (not the page backdrop) */
+.mochi-pane .mochi-scrollfade-top {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+}
+.mochi-pane .mochi-scrollfade-bottom {
+  background: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+}
+
+/* Paper fold (Mochi-style) — used by AgreementDocument */
+.mochi-paperFold {
+  position: relative;
+  /* IMPORTANT: do NOT set overflow here (it breaks sticky children). */
+}
+
+.mochi-paperFold-corner {
+  position: absolute;
+  right: -14px;
+  top: -16px;
+  width: 120px;
+  height: 120px;
+  pointer-events: none;
+  z-index: 0;
+  /* Paper curl + shadow, clipped into a corner shape */
+  background:
+    radial-gradient(closest-side at 62% 38%, rgba(255, 255, 255, 0.98) 0%, rgba(245, 245, 245, 0.98) 56%, rgba(230, 230, 230, 0.96) 78%, rgba(255, 255, 255, 0) 80%),
+    radial-gradient(closest-side at 64% 34%, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, 0) 70%);
+  clip-path: polygon(100% 0, 32% 0, 100% 68%);
+  filter: drop-shadow(-8px 10px 14px rgba(0, 0, 0, 0.16));
+}
+
+@media print {
+  .mochi-paperFold-corner {
+    display: none !important;
+  }
+}
+

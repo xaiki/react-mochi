@@ -1,0 +1,75 @@
+/* Generic list utilities (extracted from old mochi.css) */
+
+.mochi-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mochi-list-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+.mochi-list-item-row:last-child {
+  border-bottom: none;
+}
+.mochi-list-item-row--active {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+/* Default selected list item styling (matches Logs) — use for all selectable lists */
+.mochi-list-item-selected {
+  background-color: hsl(var(--muted));
+  border-left: 4px solid hsl(var(--primary));
+  box-shadow: 0 0 0 2px hsl(var(--primary) / 0.5);
+  border-radius: 6px;
+}
+.mochi-list-item-row-btn {
+  background: none;
+  border: none;
+  font: inherit;
+}
+.mochi-list-item-label {
+  font-family: "Mochi Medium";
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  color: #4b4b4b;
+}
+.mochi-list-item-caption {
+  font-family: "Mochi Medium";
+  font-size: 12px;
+  font-style: italic;
+  color: #7d7d7d;
+  margin-top: 4px;
+}
+
+/* Contacts-style list container */
+.mochi-listPane {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+/* Bottom "( Nuevo préstamo )" action like "( Add Contact )" */
+.mochi-list-footer {
+  margin-top: auto;
+  padding: 14px 18px 18px;
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(to top, rgba(245, 245, 245, 0.92), rgba(245, 245, 245, 0));
+}
+
+/* Optional: keep top delimiter, but visually "transparent" footer. */
+.mochi-list-footer--flat {
+  z-index: 3;
+  background: transparent;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
