@@ -290,6 +290,8 @@ type MochiPaneBaseProps = {
   variant?: MochiPaneVariant
   /** Scroll area variant: 'split' (two-column scroll), 'content' (single scroll). */
   scrollVariant?: MochiPaneScrollVariant
+  /** When scrollVariant is 'split': 'horizontal' = left | right, 'vertical' = top | bottom. */
+  splitOrientation?: 'horizontal' | 'vertical'
 }
 
 type MochiPaneHeaderProps = {
@@ -319,6 +321,7 @@ export function MochiPane(props: MochiPaneBaseProps & Partial<MochiPaneHeaderPro
     splitDivider = false,
     variant,
     scrollVariant,
+    splitOrientation = 'horizontal',
   } = props
 
   const derivedClassName = cn(
@@ -408,6 +411,7 @@ export function MochiPane(props: MochiPaneBaseProps & Partial<MochiPaneHeaderPro
   const effectiveChildren =
     wantsSplitScroll && childList.length >= 2 ? (
       <MochiSplitScrollColumns
+        orientation={splitOrientation}
         left={
           <>
             {splitSearchNode}

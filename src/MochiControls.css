@@ -1,25 +1,4 @@
-/* Checkbox / Radio / Toggle / Spinner (extracted from old mochi.css) */
-
-.mochi-radio,
-.mochi-checkbox {
-  cursor: pointer;
-  height: 22px;
-  width: 22px;
-  margin: 0px;
-  display: inline-block;
-  vertical-align: middle;
-  border-radius: 13px;
-  border: 2px solid #646464;
-}
-.mochi-checkbox[aria-checked="true"] {
-  background: url("/mochi/images/checkbox.png") no-repeat;
-  padding: 2px;
-  border-width: 0px;
-}
-.mochi-radio.disabled,
-.mochi-checkbox.disabled {
-  opacity: 0.4;
-}
+/* Toggle / Spinner (checkbox and radio have their own CSS) */
 
 .mochi-toggle {
   display: inline-block;

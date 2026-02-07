@@ -37,6 +37,44 @@
   transition: letter-spacing 0.1s ease-in-out;
 }
 
+/* Variants: primary (accent), secondary (muted bar), ghost (subtle), destructive (warning) */
+.mochi-button--primary > .mochi-button-base { color: #323232; }
+.mochi-button--primary > .mochi-button-bar,
+.mochi-button--primary:hover:not([disabled]) > .mochi-button-bar,
+.mochi-button--primary:active:hover:not([disabled]) > .mochi-button-bar { background-color: #69cdff; }
+.mochi-button--primary:hover:not([disabled]) > .mochi-button-bar { background-color: rgba(105, 205, 255, 0.7); }
+
+.mochi-button--secondary > .mochi-button-base { color: #4b4b4b; }
+.mochi-button--secondary > .mochi-button-decorator { color: #6b6b6b; }
+.mochi-button--secondary > .mochi-button-bar,
+.mochi-button--secondary:hover:not([disabled]) > .mochi-button-bar,
+.mochi-button--secondary:active:hover:not([disabled]) > .mochi-button-bar { background-color: #888; }
+.mochi-button--secondary:hover:not([disabled]) > .mochi-button-bar { background-color: rgba(136, 136, 136, 0.6); }
+
+.mochi-button--ghost > .mochi-button-base { color: #6b6b6b; }
+.mochi-button--ghost > .mochi-button-decorator { color: #8a8a8a; }
+.mochi-button--ghost > .mochi-button-bar { background-color: transparent; }
+.mochi-button--ghost:hover:not([disabled]) > .mochi-button-bar { background-color: rgba(0, 0, 0, 0.12); }
+.mochi-button--ghost:active:hover:not([disabled]) > .mochi-button-bar { background-color: rgba(0, 0, 0, 0.2); }
+
+.mochi-button--destructive > .mochi-button-base { color: #ff4a4a; }
+.mochi-button--destructive > .mochi-button-bar,
+.mochi-button--destructive:hover:not([disabled]) > .mochi-button-bar { background-color: rgba(255, 74, 74, 0.5); }
+.mochi-button--destructive:active:hover:not([disabled]) > .mochi-button-bar { background-color: #ff4a4a; }
+
+/* Sizes */
+.mochi-button--sm > .mochi-button-base { margin: 0 4px; height: 26px; font-size: 12px; }
+.mochi-button--sm .mochi-button-decorator { font-size: 24px; }
+.mochi-button--sm > .mochi-button-bar { top: 30px; }
+.mochi-button--md > .mochi-button-base { margin: 0 6px; height: 28px; font-size: 14px; }
+.mochi-button--md .mochi-button-decorator { font-size: 30px; }
+.mochi-button--md > .mochi-button-bar { top: 35px; }
+.mochi-button--lg > .mochi-button-base { margin: 0 8px; height: 32px; font-size: 16px; }
+.mochi-button--lg .mochi-button-decorator { font-size: 34px; }
+.mochi-button--lg > .mochi-button-bar { top: 40px; }
+.mochi-button--lg > .mochi-button-base { height: 32px; line-height: 32px; }
+.mochi-button--sm > .mochi-button-base { height: 26px; line-height: 26px; }
+
 /* ButtonDecorator (parentheses) — matches Mochi reference */
 .mochi-button-decorator {
   font-family: "Mochi Bold";

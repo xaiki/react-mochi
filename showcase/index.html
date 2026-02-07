@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mochi UI — Component showcase</title>
+  <link rel="stylesheet" href="dist/mochi.css" />
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; }
+    #root { min-height: 100vh; }
+    .showcase-masonry {
+      columns: 2 400px;
+      column-gap: 24px;
+    }
+    .showcase-masonry--wide {
+      columns: 2 640px;
+      column-gap: 32px;
+    }
+    .showcase-masonry > * {
+      break-inside: avoid;
+      margin-bottom: 24px;
+    }
+    .showcase-groupbox--fullWidth {
+      column-span: all;
+    }
+    .showcase-groupbox--fill {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .showcase-groupbox--fill .mochi-groupbox-body {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="dist/app.js"></script>
+</body>
+</html>

@@ -17,6 +17,7 @@ export {
   MochiFormLabel,
   MochiFormControl,
   MochiSelect,
+  type MochiSelectProps,
 } from './MochiFormRows'
 export {
   MochiList,

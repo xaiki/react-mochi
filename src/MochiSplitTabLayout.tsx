@@ -44,6 +44,8 @@ export type MochiSplitTabLayoutProps = {
   gapPx?: number
   /** Ref for the list pane container (e.g. for popover bounds). */
   listPaneRef?: React.RefObject<HTMLDivElement | null>
+  /** Split layout: 'horizontal' = list left, detail right; 'vertical' = list top, detail bottom. */
+  orientation?: 'horizontal' | 'vertical'
 }
 
 const defaultOrder = (a: MochiSplitTabLayoutWidget, b: MochiSplitTabLayoutWidget) => {
@@ -65,6 +67,7 @@ export function MochiSplitTabLayout({
   className,
   gapPx = 28,
   listPaneRef,
+  orientation = 'horizontal',
 }: MochiSplitTabLayoutProps) {
   const sortedWidgets = React.useMemo(
     () => (right?.widgets?.length ? [...right.widgets].sort(defaultOrder) : []),
@@ -117,6 +120,7 @@ export function MochiSplitTabLayout({
       search={left.search}
       scrollContent={!hasRight}
       scrollVariant={hasRight ? 'split' : undefined}
+      splitOrientation={hasRight ? orientation : undefined}
     >
       {leftContent}
       {rightContent}

@@ -48,6 +48,18 @@ npm run build
 - **Shell:** `MochiAppShell`, `MochiMenuNav`
 - **Utils:** `cn`
 
+## Showcase
+
+A minimal static showcase of all components lives in [`showcase/`](./showcase). Build with `npm run build` in that folder (after building the library); then open `showcase/index.html` in a browser—no dev server required.
+
+### Screenshots & video
+
+| Screenshot | Screenshot |
+|------------|------------|
+| ![Showcase — forms and controls](showcase/screenshots/Screenshot%202026-02-07%20at%2005.55.13.png) | ![Showcase — layout and shell](showcase/screenshots/Screenshot%202026-02-07%20at%2005.55.24.png) |
+
+<video src="showcase/screenshots/Screen%20Recording%202026-02-07%20at%2005.55.51.mov" controls width="720">Screen recording of the Mochi UI showcase</video>
+
 ## Versioning
 
 Starts at `0.1.0`. Publish to npm or a private registry when ready; set `"private": false` and `"publishConfig"` as needed.

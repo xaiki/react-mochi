@@ -46,39 +46,43 @@
   margin-top: 0;
 }
 
-/* Nub */
+/* Nub: overlap by 2px so it meets the popover body; clip the overlap so only the pointer shows */
 .mochi-autocomplete-popover::after {
   content: "";
   position: absolute;
 }
 .mochi-autocomplete-popover[data-dir="below"]::after {
-  top: -20px;
+  top: -18px; /* overlap 2px onto popover top */
   left: var(--mochi-nub-left, 34%);
   width: 71px;
   height: 20px;
   background: transparent url("/mochi/images/contextual-popup-nubs/up.png") no-repeat;
+  clip-path: inset(0 0 2px 0); /* clip bottom 2px (overlap zone) so nub meets popover cleanly */
 }
 .mochi-autocomplete-popover[data-dir="above"]::after {
-  top: 100%;
+  top: calc(100% - 2px); /* overlap 2px onto popover bottom */
   left: var(--mochi-nub-left, 34%);
   width: 71px;
   height: 20px;
   background: transparent url("/mochi/images/contextual-popup-nubs/down.png") no-repeat;
+  clip-path: inset(2px 0 0 0); /* clip top 2px (overlap zone) so nub meets popover cleanly */
 }
 .mochi-autocomplete-popover[data-dir="right"]::after {
-  left: 0%;
-  margin-left: -20px;
+  left: -18px; /* overlap 2px onto popover left */
+  margin-left: 0;
   top: var(--mochi-nub-top, 35%);
   width: 20px;
   height: 71px;
   background: transparent url("/mochi/images/contextual-popup-nubs/left.png") no-repeat;
+  clip-path: inset(0 2px 0 0); /* clip right (overlap side), keep pointer visible */
 }
 .mochi-autocomplete-popover[data-dir="left"]::after {
-  left: 100%;
+  left: calc(100% - 2px); /* overlap 2px onto popover right */
   top: var(--mochi-nub-top, 35%);
   width: 20px;
   height: 71px;
   background: transparent url("/mochi/images/contextual-popup-nubs/right.png") no-repeat;
+  clip-path: inset(0 0 0 2px); /* clip left (overlap side), keep pointer visible */
 }
 
 .mochi-autocomplete-popoverSurface {
@@ -96,6 +100,7 @@
   gap: 12px;
   padding: 10px 10px;
   border-radius: 14px;
+  border: none;
   background: transparent;
   text-align: left;
 }

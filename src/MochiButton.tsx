@@ -28,11 +28,8 @@ export function Button({
     'mochi-button',
     'select-none',
     isDisabled && 'disabled',
-    // allow Tailwind spacing overrides if needed
-    size === 'sm' && 'h-[34px]',
-    size === 'md' && 'h-[40px]',
-    size === 'lg' && 'h-[44px]',
-    variant === 'destructive' && 'mochi-button-warning',
+    'mochi-button--' + variant,
+    'mochi-button--' + size,
     className,
   )
 

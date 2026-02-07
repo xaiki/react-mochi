@@ -61,6 +61,39 @@
   width: min(260px, 52vw);
   min-width: 180px;
 }
+
+/* MochiSelect: trigger styled like MochiInput, list uses autocomplete item style (see MochiAutocomplete.css) */
+.mochi-select {
+  position: relative;
+  width: 100%;
+}
+.mochi-select-trigger {
+  cursor: pointer;
+  width: 100%;
+}
+.mochi-select-trigger.mochi-disabled {
+  cursor: default;
+  opacity: 0.4;
+}
+.mochi-select-triggerLabel {
+  display: block;
+  min-height: 22px;
+  font-family: "Mochi Medium";
+  font-size: 14px;
+  font-style: italic;
+  color: #4b4b4b;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+.mochi-select-trigger:not(.mochi-disabled):hover .mochi-select-triggerLabel {
+  color: #323232;
+}
+.mochi-select-popover {
+  position: absolute;
+}
+
 @media (max-width: 1024px) {
   .mochi-form-row {
     flex-direction: column;

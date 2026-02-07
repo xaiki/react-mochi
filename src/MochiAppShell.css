@@ -10,6 +10,24 @@
   box-sizing: border-box;
 }
 
+/* Horizontal layout: first child = nav (side strip), second = main (header + body) */
+.mochi-appshell--horizontal {
+  flex-direction: row;
+  align-items: stretch;
+}
+.mochi-appshell--horizontal > *:first-child {
+  flex: 0 0 auto;
+  width: 180px;
+  min-width: 140px;
+}
+.mochi-appshell--horizontal > *:last-child {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 @media (max-width: 820px) {
   .mochi-appshell {
     flex-direction: column;
@@ -20,6 +38,13 @@
     padding-top: env(safe-area-inset-top);
     padding-bottom: calc(12px + env(safe-area-inset-bottom));
     overflow-x: hidden;
+  }
+  .mochi-appshell--horizontal {
+    flex-direction: column;
+  }
+  .mochi-appshell--horizontal > *:first-child {
+    width: auto;
+    min-width: 0;
   }
 }
 

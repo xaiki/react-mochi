@@ -1,0 +1,73 @@
+/* Mochi-style checkbox: same look as radio but squared */
+
+.mochi-checkbox {
+  --mochi-checkbox-size: 30px;
+  --mochi-checkbox-border: rgba(0, 0, 0, 0.55);
+  --mochi-checkbox-bg-checked: #f7b500;
+  --mochi-checkbox-shadow: 0 8px 18px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+
+  width: var(--mochi-checkbox-size);
+  height: var(--mochi-checkbox-size);
+  border-radius: 6px;
+  border: 2px solid var(--mochi-checkbox-border);
+  background: transparent;
+  box-shadow: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  vertical-align: middle;
+}
+
+.mochi-checkbox[data-state="checked"],
+.mochi-checkbox[data-state="mixed"] {
+  border-color: rgba(247, 181, 0, 0.95);
+  background: var(--mochi-checkbox-bg-checked);
+  box-shadow: var(--mochi-checkbox-shadow);
+}
+
+.mochi-checkboxIcon {
+  width: calc(var(--mochi-checkbox-size) * 0.5);
+  height: calc(var(--mochi-checkbox-size) * 0.5);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Check mark */
+.mochi-checkbox[data-state="checked"] .mochi-checkboxIcon::before {
+  content: "";
+  width: 10px;
+  height: 6px;
+  border-left: 3px solid rgba(255, 255, 255, 0.96);
+  border-bottom: 3px solid rgba(255, 255, 255, 0.96);
+  transform: rotate(-45deg) translateY(-1px);
+  border-radius: 1px;
+}
+
+/* Mixed (indeterminate) mark */
+.mochi-checkbox[data-state="mixed"] .mochi-checkboxIcon::before {
+  content: "";
+  width: 14px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 999px;
+}
+
+.mochi-checkbox:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 3px rgba(105, 205, 255, 0.35),
+    var(--mochi-checkbox-shadow);
+}
+
+.mochi-checkbox[aria-disabled="true"],
+.mochi-checkbox.mochi-checkbox--disabled {
+  opacity: 0.55;
+  pointer-events: none;
+}
