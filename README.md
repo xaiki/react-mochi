@@ -50,7 +50,9 @@ npm run build
 
 ## Showcase
 
-A minimal static showcase of all components lives in [`showcase/`](./showcase). Build with `npm run build` in that folder (after building the library); then open `showcase/index.html` in a browser—no dev server required.
+**Live demo:** [xaiki.github.io/react-mochi](https://xaiki.github.io/react-mochi)
+
+A minimal static showcase of all components lives in [`showcase/`](./showcase). Build with `npm run build` in that folder (after building the library); then open `showcase/index.html` in a browser—no dev server required. To publish to GitHub Pages, enable **Settings → Pages → Source: GitHub Actions**; the workflow in `.github/workflows/deploy-mochi-showcase.yml` builds and deploys on push to `main`/`master`.
 
 ### Screenshots & video
 
